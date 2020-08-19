@@ -11,6 +11,6 @@ Byte Chat was created with:
 
 ## Thank You's
 I would also like to give a strong thank you to the following sites for their wonderful learning resources.<br>git readme f
-https://learnopengl.com/
-https://docs.microsoft.com/en-us/windows/win32/networking
-https://www.gafferongames.com/
+* https://learnopengl.com/
+* https://docs.microsoft.com/en-us/windows/win32/networking
+* https://www.gafferongames.com/
