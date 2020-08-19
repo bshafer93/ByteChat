@@ -1,0 +1,2 @@
+# ByteChatClient
+ Byte Chat application
