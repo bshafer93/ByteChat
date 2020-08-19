@@ -217,7 +217,7 @@
     <ClCompile Include="glad.c" />
     <ClCompile Include="JuicyEngine.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="src\Packet.cpp" />
+    <ClCompile Include="Packet.cpp" />
     <ClCompile Include="Primative.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="TextRenderer.cpp" />
@@ -226,7 +226,7 @@
   <ItemGroup>
     <ClInclude Include="BasicChatClient.h" />
     <ClInclude Include="JuicyEngine.h" />
-    <ClInclude Include="src\Packet.h" />
+    <ClInclude Include="Packet.h" />
     <ClInclude Include="Primative.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stb_image.h" />
@@ -237,8 +237,12 @@
     <Font Include="AtariClassicChunky.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="fontFragShader.frag" />
-    <None Include="fontVertShader.vert" />
+    <None Include="fontFragShader.frag">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="fontVertShader.vert">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="screenShader.frag" />
     <None Include="screenShader.vert" />
   </ItemGroup>
