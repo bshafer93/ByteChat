@@ -1,6 +1,14 @@
 # ByteChatClient
 This is my attempt to a make a client/server chat application.
 
+## Implemented
+Implementations include:
+* Client/Server Network architecture 
+  * Custom Packet class
+* Opengl based interface 
+  * input helped by glfw
+* Multithreaded interface
+
 ## Technologies
 Byte Chat was created with:
 * Opengl                    https://www.opengl.org/
