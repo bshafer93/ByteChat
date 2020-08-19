@@ -1,13 +1,15 @@
 # ByteChatClient
 This is my attempt to a make a client/server chat application.
 
+The server implementation can be found here https://github.com/bshafer93/ByteChatServer
+
+
 ## Implemented
 Implementations include:
 * Client/Server Network architecture 
-  * Custom Packet class
+  * Custom packet class
 * Opengl based interface 
-  * input helped by glfw
-* Multithreaded interface
+* Multithreaded using std::async
 
 ## Technologies
 Byte Chat was created with:
