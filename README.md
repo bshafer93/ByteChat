@@ -10,7 +10,7 @@ Byte Chat was created with:
 * freetype                  https://www.freetype.org/
 
 ## Thank You's
-I would also like to give a strong thank you to the following sites for their wonderful learning resources.<br>git readme f
+I would also like to give a strong thank you to the following sites for their wonderful learning resources.
 * https://learnopengl.com/
 * https://docs.microsoft.com/en-us/windows/win32/networking
 * https://www.gafferongames.com/
