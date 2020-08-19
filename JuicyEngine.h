@@ -22,14 +22,14 @@
 const int LINE_SPACING = 10.0f;
 const int FONT_SIZE = 16.0f;
 #ifndef _WIN32
-#define FONTLOCATION "AtariClassicChunky.ttf"
+#define FONTLOCATION "Fonts\\AtariClassicChunky.ttf"
 #endif
 #ifdef _WIN32
 #define FONTLOCATION "C:\\Windows\\Fonts\\arial.ttf"
 #endif
 
-#define FONTVERTSHADER "fontVertShader.vert"
-#define FONTFRAGSHADER "fontFragShader.frag"
+#define FONTVERTSHADER "Shaders\\fontVertShader.vert"
+#define FONTFRAGSHADER "Shaders\\fontFragShader.frag"
 namespace JuicyEngineNS
 {
 

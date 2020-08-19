@@ -344,7 +344,7 @@ namespace JuicyEngineNS
 			delete screenShader;
 		}
 
-		screenShader = new Shader("screenShader.vert", "screenShader.frag");
+		screenShader = new Shader("Shaders\\screenShader.vert", "Shaders\\screenShader.frag");
 
 		// screen quad VAO
 		glGenVertexArrays(1, &VAO_SCREEN);
