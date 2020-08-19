@@ -102,7 +102,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>I:\Programming\ByteChatClient\ExternalLibs\includes;$(IncludePath)</IncludePath>
+    <IncludePath>I:\Programming\ByteChatClient\ExternalLibs\includes;I:\Programming\ByteChatClient\ByteChat\src;$(IncludePath)</IncludePath>
     <LibraryPath>I:\Programming\ByteChatClient\ExternalLibs\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -113,12 +113,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>I:\Programming\ByteChatClient\ExternalLibs\includes;$(IncludePath)</IncludePath>
+    <IncludePath>I:\Programming\ByteChatClient\ExternalLibs\includes;I:\Programming\ByteChatClient\ByteChat\src;$(IncludePath)</IncludePath>
     <LibraryPath>I:\Programming\ByteChatClient\ExternalLibs\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='FinalBuild|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>I:\Programming\ByteChatClient\ExternalLibs\includes;$(IncludePath)</IncludePath>
+    <IncludePath>I:\Programming\ByteChatClient\ExternalLibs\includes;I:\Programming\ByteChatClient\ByteChat\src;$(IncludePath)</IncludePath>
     <LibraryPath>I:\Programming\ByteChatClient\ExternalLibs\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -217,7 +217,7 @@
     <ClCompile Include="glad.c" />
     <ClCompile Include="JuicyEngine.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Packet.cpp" />
+    <ClCompile Include="src\Packet.cpp" />
     <ClCompile Include="Primative.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="TextRenderer.cpp" />
@@ -226,7 +226,7 @@
   <ItemGroup>
     <ClInclude Include="BasicChatClient.h" />
     <ClInclude Include="JuicyEngine.h" />
-    <ClInclude Include="Packet.h" />
+    <ClInclude Include="src\Packet.h" />
     <ClInclude Include="Primative.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stb_image.h" />
