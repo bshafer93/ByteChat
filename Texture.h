@@ -21,10 +21,10 @@ namespace JuicyEngineNS
 		void activate(int n);
 
 		unsigned char* data;
-		unsigned int ID = 0;
+		unsigned int id = 0;
 		int width;
 		int height;
-		int numChannels;
+		int number_of_channels;
 	};
 
 }

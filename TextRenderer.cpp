@@ -117,7 +117,7 @@ namespace JuicyEngineNS
 	TextRenderer::~TextRenderer()
 	{
 		for (int i = 0; i < 256; i++) {
-			glDeleteTextures(1, &character_array[i].TexID);
+			glDeleteTextures(1, &character_array[i].texture_id);
 		}
 		glDeleteVertexArrays(1, &vao);
 		glDeleteBuffers(1, &vbo);
@@ -128,8 +128,8 @@ namespace JuicyEngineNS
 
 	void TextRenderer::DrawString(std::string text, float x, float y, float scale, glm::vec3 color)
 	{
-		text_cursor.xPos = x;
-		text_cursor.yPos = y;
+		text_cursor.x_position = x;
+		text_cursor.y_position = y;
 
 		// activate corresponding render state	
 		font_shader->Activate();
@@ -144,11 +144,11 @@ namespace JuicyEngineNS
 
 			CharacterFont ch = character_array[*c];
 
-			float xpos = text_cursor.xPos + ch.Bearing.x * scale;
-			float ypos = text_cursor.yPos + (character_array['H'].Bearing.y - ch.Bearing.y) * scale;
+			float xpos = text_cursor.x_position + ch.bearing.x * scale;
+			float ypos = text_cursor.y_position + (character_array['H'].bearing.y - ch.bearing.y) * scale;
 
-			float w = ch.Size.x * scale;
-			float h = ch.Size.y * scale;
+			float w = ch.size.x * scale;
+			float h = ch.size.y * scale;
 			// update VBO for each character
 			float font_vertices[6][4] = {
 				{ xpos,     ypos + h,   0.0f, 1.0f },
@@ -160,7 +160,7 @@ namespace JuicyEngineNS
 				{ xpos + w, ypos,       1.0f, 0.0f }
 			};
 			// render glyph texture over quad
-			glBindTexture(GL_TEXTURE_2D, ch.TexID);
+			glBindTexture(GL_TEXTURE_2D, ch.texture_id);
 			// update content of VBO memory
 			glBindBuffer(GL_ARRAY_BUFFER, vbo);
 			glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(font_vertices), font_vertices);
@@ -168,7 +168,7 @@ namespace JuicyEngineNS
 			// render quad
 			glDrawArrays(GL_TRIANGLES, 0, 6);
 			// now advance cursors for next glyph (note that advance is number of 1/64 pixels)
-			text_cursor.xPos += (ch.Advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64)
+			text_cursor.x_position += (ch.offset_to_next >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64)
 
 		}
 		glBindVertexArray(0);
@@ -206,11 +206,11 @@ namespace JuicyEngineNS
 
 			CharacterFont ch = character_array[124];
 
-			float xpos = text_cursor.xPos + ch.Bearing.x * scale;
-			float ypos = text_cursor.yPos + (character_array['H'].Bearing.y - ch.Bearing.y) * scale;
+			float xpos = text_cursor.x_position + ch.bearing.x * scale;
+			float ypos = text_cursor.y_position + (character_array['H'].bearing.y - ch.bearing.y) * scale;
 
-			float w = ch.Size.x * scale;
-			float h = ch.Size.y * scale;
+			float w = ch.size.x * scale;
+			float h = ch.size.y * scale;
 			// update VBO for each character
 			float font_vertices[6][4] = {
 				{ xpos,     ypos + h,   0.0f, 1.0f },
@@ -222,7 +222,7 @@ namespace JuicyEngineNS
 				{ xpos + w, ypos,       1.0f, 0.0f }
 			};
 			// render glyph texture over quad
-			glBindTexture(GL_TEXTURE_2D, ch.TexID);
+			glBindTexture(GL_TEXTURE_2D, ch.texture_id);
 			// update content of VBO memory
 			glBindBuffer(GL_ARRAY_BUFFER, vbo);
 			glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(font_vertices), font_vertices);

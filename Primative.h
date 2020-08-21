@@ -13,18 +13,18 @@ namespace JuicyEngineNS
 		Shader* shader;
 		JuicyEngine::primativeType shape;
 		glm::mat4 transform;
-		unsigned int VAO_ID;
-		unsigned int VBO_ID;
-		unsigned int EBO_ID;
+		unsigned int vao;
+		unsigned int vbo;
+		unsigned int ebo;
 		Texture* tex01;
 		std::vector<Texture*> textures;
-		void drawShape();
-		void updateTransform();
+		void DrawShape();
+		void UpdateTransform();
 		glm::mat4 currentTrans;
-		void bounce();
+		void Bounce();
 
-		void moveTo(glm::vec3 v);
-		void setCameraMatrices(glm::mat4& m, glm::mat4& v, glm::mat4& p);
+		void MoveTo(glm::vec3 v);
+		void SetCameraMatrices(glm::mat4& m, glm::mat4& v, glm::mat4& p);
 
 
 		glm::mat4 model;

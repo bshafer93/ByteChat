@@ -20,15 +20,15 @@ namespace JuicyEngineNS
 
         struct CharacterFont {
 
-            unsigned int TexID;      // ID handle of the glyph texture
-            glm::ivec2   Size;       // Size of glyph
-            glm::ivec2   Bearing;    // Offset from baseline to left/top of glyph
-            unsigned int Advance;    // Offset to advance to next glyph
-            int charWidth;
+            unsigned int texture_id;      // ID handle of the glyph texture
+            glm::ivec2   size;       // Size of glyph
+            glm::ivec2   bearing;    // Offset from baseline to left/top of glyph
+            unsigned int offset_to_next;    // Offset to advance to next glyph
+            int character_width;
         };
         struct InputCursor {
-            float xPos;
-            float yPos;
+            float x_position;
+            float y_position;
             bool active;
         };
 

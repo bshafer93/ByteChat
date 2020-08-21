@@ -18,7 +18,7 @@ namespace JuicyEngineNS
 
 	JuicyEngine::JuicyEngine()
 	{
-		getInput = false;
+		get_input = false;
 		init_glfw_glad();
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -30,11 +30,11 @@ namespace JuicyEngineNS
 		text = new TextRenderer(FONTLOCATION, FONTVERTSHADER, FONTFRAGSHADER, FONT_SIZE, window_width, window_height);
 		//--------------------------------------
 
-		MAX_ROWS = window_height / (text->font_max_height + LINE_SPACING); //10pix padding
-		MAX_COLS = window_width / (text->font_max_width / 2);
+		max_rows = window_height / (text->font_max_height + LINE_SPACING); //10pix padding
+		max_columns = window_width / (text->font_max_width / 2);
 
-		std::cout << "MAX_ROWS:	" << MAX_ROWS << std::endl;
-		std::cout << "MAX_COLS:	" << MAX_COLS << std::endl;
+		std::cout << "MAX_ROWS:	" << max_rows << std::endl;
+		std::cout << "MAX_COLS:	" << max_columns << std::endl;
 
 		//Sets up the screenbuffer
 		SetUpFrameBuffer();
@@ -89,7 +89,7 @@ namespace JuicyEngineNS
 		glfwSetFramebufferSizeCallback(window, callback_WindowResize);
 		glfwSetCharCallback(window, character_callback);
 		glfwSetKeyCallback(window, key_callback);
-		glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
+		glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nr_attributes);
 
 		return 0;
 
@@ -109,10 +109,10 @@ namespace JuicyEngineNS
 		JS->SetUpFrameBuffer();
 		std::cout << "Window Width: " << JS->window_width << std::endl;
 		std::cout << "Window Height: " << JS->window_height << std::endl;
-		JS->MAX_ROWS = JS->window_height / (JS->text->font_max_height+5); //10pix padding
-		JS->MAX_COLS = JS->window_width / (JS->text->font_max_width/2);
-		std::cout << "MAX_ROWS:	" << JS->MAX_ROWS << std::endl;
-		std::cout << "MAX_COLS:	" << JS->MAX_COLS << std::endl;
+		JS->max_rows = JS->window_height / (JS->text->font_max_height+5); //10pix padding
+		JS->max_columns = JS->window_width / (JS->text->font_max_width/2);
+		std::cout << "MAX_ROWS:	" << JS->max_rows << std::endl;
+		std::cout << "MAX_COLS:	" << JS->max_columns << std::endl;
 
 	}
 
@@ -120,7 +120,7 @@ namespace JuicyEngineNS
 	{
 		JuicyEngine* JS;
 		JS = reinterpret_cast<JuicyEngine*>(glfwGetWindowUserPointer(window));
-		JS->inputText += (char)codepoint;
+		JS->input_text += (char)codepoint;
 
 	}
 
@@ -129,91 +129,90 @@ namespace JuicyEngineNS
 		JuicyEngine* JS;
 		JS = reinterpret_cast<JuicyEngine*>(glfwGetWindowUserPointer(window));
 		keyInputStruct ki = { key,scancode,action,mods };
-		JS->keyInputQueue.push(ki);
+		JS->key_input_queue.push(ki);
 
 	}
 
-	void JuicyEngine::processInput(GLFWwindow* window)
+	void JuicyEngine::ProcessInput(GLFWwindow* window)
 	{
-		if (keyInputQueue.empty()) {
+		if (key_input_queue.empty()) {
 			return;
 		}
 
-		if ((keyInputQueue.front().key == GLFW_KEY_TAB) && (keyInputQueue.front().action == GLFW_PRESS))
+		if ((key_input_queue.front().key == GLFW_KEY_TAB) && (key_input_queue.front().action == GLFW_PRESS))
 		{
-			getInput = !getInput;
+			get_input = !get_input;
 			std::cout << "Gathering Input" << std::endl;
 		}
 
-		if ((keyInputQueue.front().key == GLFW_KEY_ESCAPE) && (keyInputQueue.front().action == GLFW_PRESS)) {
+		if ((key_input_queue.front().key == GLFW_KEY_ESCAPE) && (key_input_queue.front().action == GLFW_PRESS)) {
 			glfwSetWindowShouldClose(window, true);
 		}
 
-		if (getInput == true)
+		if (get_input == true)
 		{
-			if ((keyInputQueue.front().key == GLFW_KEY_BACKSPACE) && (keyInputQueue.front().action == GLFW_PRESS)) {
-				if (!inputText.empty()) {
-					inputText.pop_back();
+			if ((key_input_queue.front().key == GLFW_KEY_BACKSPACE) && (key_input_queue.front().action == GLFW_PRESS)) {
+				if (!input_text.empty()) {
+					input_text.pop_back();
 				}	
 			}
-			if ((keyInputQueue.front().key == GLFW_KEY_ENTER) && (keyInputQueue.front().action == GLFW_PRESS)) {
+			if ((key_input_queue.front().key == GLFW_KEY_ENTER) && (key_input_queue.front().action == GLFW_PRESS)) {
 				
-				getInput = false;
+				get_input = false;
 				
 				//Send finished input
 				std::cout << "Sending Packet" << std::endl;
-				client.ParseUserInput(inputText);
+				client.ParseUserInput(input_text);
 			}
 
 		}
-		if (getInput == false)
+		if (get_input == false)
 		{
 			//Clear input buffer
-			inputText.clear();
+			input_text.clear();
 
 		}
 
 
-		keyInputQueue.pop();
+		key_input_queue.pop();
 	}
 
-	int JuicyEngine::renderLoop()
+	int JuicyEngine::RenderLoop()
 	{
 
-		//Launch seperate thread for recieving packets;
-		std::future<void> recmsg = std::async(std::launch::async, &BasicChatClient::Run, &client);
+	
 
 		while (!glfwWindowShouldClose(window))
 		{
 		
 			//----------Get Delta Time---------------
 			float currentFrame = glfwGetTime();
-			deltaTime = currentFrame - lastFrame;
-			lastFrame = currentFrame;
+			delta_time = currentFrame - last_time_frame;
+			last_time_frame = currentFrame;
 			//----------------------------------------
 
 			//input
-			processInput(window);
+			ProcessInput(window);
 
 			//-----------Clear Current Frame-----------
-			glBindFramebuffer(GL_FRAMEBUFFER, FrameBuffer_ID);
+			glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer_id);
 			glEnable(GL_DEPTH_TEST);
-			clearFrameBuffer();
+			ClearFrameBuffer();
 			//-----------------------------------------
 
 			if (!client.message_log.empty()) {
-				for (int i = 0; i < MAX_ROWS-1; i++) {
+				for (int i = 0; i < max_rows-1; i++) {
 					if (i < client.message_log.size()) {
 
 
-						if (client.message_log[i].size() > MAX_COLS) {
-							text->DrawString(client.message_log[i].substr(0,MAX_COLS).c_str(),
+						if (client.message_log[i].size() > max_columns) {
+							text->DrawString(client.message_log[i].substr(0,max_columns).c_str(),
 								10.0f,
 								(i * (text->font_max_height + LINE_SPACING)) + LINE_SPACING,
 								1.0f,
 								glm::vec3(0.5f, 0.8f, 0.2f));
 							i++;
-							text->DrawString(client.message_log[i - 1].substr(MAX_COLS, client.message_log[i-1].size()-1).c_str(),
+							text->DrawString(client.message_log[i - 1].substr(max_columns, client.message_log[i-1].size()-1).c_str(),
 								10.0f,
 								(i * (text->font_max_height + LINE_SPACING)) + LINE_SPACING,
 								1.0f,
@@ -237,19 +236,19 @@ namespace JuicyEngineNS
 			}
 
 
-			if (getInput == true) {
+			if (get_input == true) {
 
-				text->DrawString(inputText.c_str(), 10.0f , window_height - text->font_max_height-5.0f,1.0f, default_font_color);
+				text->DrawString(input_text.c_str(), 10.0f , window_height - text->font_max_height-5.0f,1.0f, default_font_color);
 				text->DrawCursor(1.0f, default_font_color);
 			}
 
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 			glDisable(GL_DEPTH_TEST);
-			clearFrameBuffer();
+			ClearFrameBuffer();
 
-			screenShader->Activate();
-			glBindVertexArray(VAO_SCREEN);
-			glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
+			screen_shader->Activate();
+			glBindVertexArray(vao_screen);
+			glBindTexture(GL_TEXTURE_2D, texture_color_buffer);
 			glDrawArrays(GL_TRIANGLES, 0, 6);
 
 			glfwSwapBuffers(window);
@@ -265,14 +264,17 @@ namespace JuicyEngineNS
 
 	}
 
-	void JuicyEngine::run()
+	void JuicyEngine::Run()
 	{
+		//Run is still here just incase I wanna add anything else before the render loop starts. 
 
-		renderLoop();
+			//Launch seperate thread for recieving packets;
+		std::future<void> recmsg = std::async(std::launch::async, &BasicChatClient::Run, &client);
+		RenderLoop();
 
 	}
 
-	static std::string loadFile(const char* path)
+	static std::string LoadFile(const char* path)
 	{
 
 		std::fstream loadedFile;
@@ -295,7 +297,7 @@ namespace JuicyEngineNS
 		return full_file_string;
 	}
 
-	void JuicyEngine::clearFrameBuffer()
+	void JuicyEngine::ClearFrameBuffer()
 	{
 
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -303,55 +305,27 @@ namespace JuicyEngineNS
 
 	}
 
-	void JuicyEngine::addPrimative(Shader* s, primativeType p)
-	{
 
-		Primative* pim = new Primative(s, JuicyEngine::primativeType::TRIANGLE, &model, &view, &projection);
-
-		primShapes.push_back(pim);
-
-	}
-
-	void JuicyEngine::addPrimative(primativeType p, std::string vertPath, std::string fragPath)
-	{
-
-		ShaderList.push_back(new Shader(vertPath.c_str(), fragPath.c_str()));
-
-		Primative* pim = new Primative(ShaderList.back(), p, &model, &view, &projection);
-
-		primShapes.push_back(pim);
-	}
-
-	void JuicyEngine::addPrimative(primativeType p, const char* vertPath, const char* fragPath)
-	{
-		std::string vert = loadFile(vertPath);
-
-		std::string frag = loadFile(fragPath);
-
-		addPrimative(p, vert, frag);
-
-	}
 
 	void JuicyEngine::SetUpFrameBuffer()
 	{
-		if (screenShader != nullptr) {
-			//Remove old Buffers when window resizes
-			glDeleteFramebuffers(1, &FrameBuffer_ID);
-			glDeleteTextures(1, &textureColorBuffer);
-			glDeleteRenderbuffers(1, &RBO_SCREEN);
-			glDeleteVertexArrays(1, &VAO_SCREEN);
-			glDeleteBuffers(1, &VBO_SCREEN);
-			delete screenShader;
+		if (screen_shader != nullptr) {
+			//Remove old buffers when window resizes
+			glDeleteFramebuffers(1, &frame_buffer_id);
+			glDeleteTextures(1, &texture_color_buffer);
+			glDeleteRenderbuffers(1, &rbo_screen);
+			glDeleteVertexArrays(1, &vao_screen);
+			glDeleteBuffers(1, &vbo_screen);
+			
 		}
 
-		screenShader = new Shader("Shaders\\screenShader.vert", "Shaders\\screenShader.frag");
+		screen_shader.reset( new Shader("Shaders\\screenShader.vert", "Shaders\\screenShader.frag"));
 
 		// screen quad VAO
-		glGenVertexArrays(1, &VAO_SCREEN);
-		glGenBuffers(1, &VBO_SCREEN);
-
-		glBindVertexArray(VAO_SCREEN);
-		glBindBuffer(GL_ARRAY_BUFFER, VBO_SCREEN);
+		glGenVertexArrays(1, &vao_screen);
+		glGenBuffers(1, &vbo_screen);
+		glBindVertexArray(vao_screen);
+		glBindBuffer(GL_ARRAY_BUFFER, vbo_screen);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
@@ -362,24 +336,24 @@ namespace JuicyEngineNS
 		//framebuffer configuration
 		// -------------------------
 
-		glGenFramebuffers(1, &FrameBuffer_ID);
-		glBindFramebuffer(GL_FRAMEBUFFER, FrameBuffer_ID);
-		// create a color attachment texture
+		glGenFramebuffers(1, &frame_buffer_id);
+		glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer_id);
 
-		glGenTextures(1, &textureColorBuffer);
-		glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
+		// create a color attachment texture
+		glGenTextures(1, &texture_color_buffer);
+		glBindTexture(GL_TEXTURE_2D, texture_color_buffer);
 
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, window_width, window_height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorBuffer, 0);
-		// create a renderbuffer object for depth and stencil attachment (we won't be sampling these)
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture_color_buffer, 0);
 
-		glGenRenderbuffers(1, &RBO_SCREEN);
-		glBindRenderbuffer(GL_RENDERBUFFER, RBO_SCREEN);
+		// create a renderbuffer object for depth and stencil attachment (we won't be sampling these)
+		glGenRenderbuffers(1, &rbo_screen);
+		glBindRenderbuffer(GL_RENDERBUFFER, rbo_screen);
 		// use a single renderbuffer object for both a depth AND stencil buffer.
 		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, window_width, window_height);
-		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBO_SCREEN); // now actually attach it
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo_screen); // now actually attach it
 		// now that we actually created the framebuffer and added all attachments we want to check if it is actually complete now
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 			std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << std::endl;

@@ -35,7 +35,7 @@ const int FONT_SIZE = 16.0f;
 namespace JuicyEngineNS
 {
 
-	class Primative;
+	
 	class JuicyEngine
 	{
 
@@ -43,49 +43,27 @@ namespace JuicyEngineNS
 		int window_height = 600;
 		int window_width = 870;
 
-		int MAX_ROWS = 80;
-		int MAX_COLS = 30;
+		int max_rows = 80;
+		int max_columns = 30;
 
 		JuicyEngine();
 		~JuicyEngine();
 
 		//--------------VARIABLES----------------
 		GLFWwindow* window;
-		Shader* shader1;
-		Shader* shader2;
-		Shader* fontShader;
-		std::vector<Shader> shaderList;
-
+	
 		TextRenderer* text;
-
-		Texture* tex1;
-		Texture* tex2;
-
 		glm::vec3 default_font_color;
-
-		unsigned int textureIDS[128];
-
-		std::vector<Primative*> primShapes;
-
-		std::vector<unsigned int> VAOS;
-		std::vector<unsigned int> VBOS;
-
-		std::vector<Shader*> ShaderList;
-		std::vector<Texture*> TextureList;
-
+	
 		//-----Camera variables-----------------
 		glm::mat4 model;
 		glm::mat4 view;
 		glm::mat4 projection;
-
-		glm::vec3 cameraPos;
-		glm::vec3 cameraFront;
-		glm::vec3 cameraUp;
 		//---------------------------------------
 
 		//-----------Time Related Things----------
-		float deltaTime = 0.0f;	// Time between current frame and last frame
-		float lastFrame = 0.0f; // Time of last frame
+		float delta_time = 0.0f;	// Time between current frame and last frame
+		float last_time_frame = 0.0f; // Time of last frame
 		//---------------------------------------
 
 		//---------------------Keyinput----------
@@ -96,9 +74,9 @@ namespace JuicyEngineNS
 			int mods;
 		};
 
-		std::queue<keyInputStruct>keyInputQueue;
-		std::string inputText;
-		bool getInput;
+		std::queue<keyInputStruct>key_input_queue;
+		std::string input_text;
+		bool get_input;
 		//---------------------------------------
 
 		enum class primativeType {
@@ -115,28 +93,25 @@ namespace JuicyEngineNS
 		static void callback_WindowResize(GLFWwindow* window, int width, int height);
 		static void character_callback(GLFWwindow* window, unsigned int codepoint);
 		static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
-		void processInput(GLFWwindow* window);
-		int renderLoop();
-		void run();
 
-		void clearFrameBuffer();
-		void addPrimative(Shader* s, primativeType p);
-		//Add new Prim with custom Shader
-		void addPrimative(primativeType p, std::string vertPath, std::string fragPath);
-		void addPrimative(primativeType p, const char* vertPath, const char* fragPath);
+		void ProcessInput(GLFWwindow* window);
+		int RenderLoop();
+		void Run();
+		void ClearFrameBuffer();
+		
 		//--------------HWINFO----------
-		int nrAttributes;
+		int nr_attributes;
 		//-----------------------------
 
 
 		//----------------framebuffer---
 		void SetUpFrameBuffer();
-		unsigned int VAO_SCREEN;
-		unsigned int VBO_SCREEN;
-		unsigned int FrameBuffer_ID;
-		unsigned int textureColorBuffer;
-		unsigned int RBO_SCREEN;
-		Shader* screenShader;
+		unsigned int vao_screen;
+		unsigned int vbo_screen;
+		unsigned int frame_buffer_id;
+		unsigned int texture_color_buffer;
+		unsigned int rbo_screen;
+		std::unique_ptr<Shader> screen_shader;
 		//-------------------------------
 
 		//Networking Class---------------
@@ -146,7 +121,7 @@ namespace JuicyEngineNS
 	};
 
 
-	std::string loadFile(const char* path);
+	std::string LoadFile(const char* path);
 
 
 }

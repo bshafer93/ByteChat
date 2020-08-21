@@ -6,7 +6,7 @@ int main(int argc, char** argv) {
 	
 
 	JuicyEngineNS::JuicyEngine je;
-	je.run();
+	je.Run();
 	
 	return 0;
 }

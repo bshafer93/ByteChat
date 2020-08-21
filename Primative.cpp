@@ -105,11 +105,11 @@ namespace JuicyEngineNS
 		{
 
 			//-----------------------------Add triangle-------------------------------------------------
-			glGenVertexArrays(1, &VAO_ID);
-			glGenBuffers(1, &VBO_ID);
-			glBindVertexArray(VAO_ID);
+			glGenVertexArrays(1, &vao);
+			glGenBuffers(1, &vbo);
+			glBindVertexArray(vao);
 			//-----------------Bind new Object 2--------------------------------
-			glBindBuffer(GL_ARRAY_BUFFER, VBO_ID);
+			glBindBuffer(GL_ARRAY_BUFFER, vbo);
 			glBufferData(GL_ARRAY_BUFFER, sizeof(triverts), triverts, GL_STATIC_DRAW);
 			//----------------------------------------------------------------
 			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
@@ -122,12 +122,12 @@ namespace JuicyEngineNS
 		}
 		case JuicyEngine::primativeType::CUBE:
 		{
-			glGenVertexArrays(1, &VAO_ID);
-			glGenBuffers(1, &VBO_ID);
+			glGenVertexArrays(1, &vao);
+			glGenBuffers(1, &vbo);
 
-			glBindVertexArray(VAO_ID);
+			glBindVertexArray(vao);
 
-			glBindBuffer(GL_ARRAY_BUFFER, VBO_ID);
+			glBindBuffer(GL_ARRAY_BUFFER, vbo);
 			glBufferData(GL_ARRAY_BUFFER, sizeof(simple_cube_vertices), simple_cube_vertices, GL_STATIC_DRAW);
 
 			// position attribute
@@ -148,16 +148,16 @@ namespace JuicyEngineNS
 		case JuicyEngine::primativeType::SQUARE:
 		{
 
-			glGenVertexArrays(1, &VAO_ID);
-			glGenBuffers(1, &VBO_ID);
-			glGenBuffers(1, &EBO_ID);
+			glGenVertexArrays(1, &vao);
+			glGenBuffers(1, &vbo);
+			glGenBuffers(1, &ebo);
 
-			glBindVertexArray(VAO_ID);
+			glBindVertexArray(vao);
 
-			glBindBuffer(GL_ARRAY_BUFFER, VBO_ID);
+			glBindBuffer(GL_ARRAY_BUFFER, vbo);
 			glBufferData(GL_ARRAY_BUFFER, sizeof(simple_square_vertices), simple_square_vertices, GL_STATIC_DRAW);
 
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_ID);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(simple_square_indices), simple_square_indices, GL_STATIC_DRAW);
 
 			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
@@ -182,14 +182,14 @@ namespace JuicyEngineNS
 	Primative::~Primative()
 	{
 
-		glDeleteVertexArrays(1, &VAO_ID);
-		glDeleteBuffers(1, &VBO_ID);
-		glDeleteBuffers(1, &EBO_ID);
+		glDeleteVertexArrays(1, &vao);
+		glDeleteBuffers(1, &vbo);
+		glDeleteBuffers(1, &ebo);
 
 
 	}
 
-	void Primative::drawShape()
+	void Primative::DrawShape()
 	{
 
 
@@ -199,8 +199,8 @@ namespace JuicyEngineNS
 		{
 
 			shader->Activate();
-			updateTransform();
-			glBindVertexArray(VAO_ID);
+			UpdateTransform();
+			glBindVertexArray(vao);
 			glDrawArrays(GL_TRIANGLES, 0, 3);
 			break;
 		}
@@ -209,9 +209,9 @@ namespace JuicyEngineNS
 
 			tex01->activate(0);
 			shader->Activate();
-			updateTransform();
+			UpdateTransform();
 
-			glBindVertexArray(VAO_ID);
+			glBindVertexArray(vao);
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 			break;
 
@@ -222,8 +222,8 @@ namespace JuicyEngineNS
 
 			tex01->activate(0);
 			shader->Activate();
-			updateTransform();
-			glBindVertexArray(VAO_ID);
+			UpdateTransform();
+			glBindVertexArray(vao);
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 			break;
 
@@ -236,7 +236,7 @@ namespace JuicyEngineNS
 
 	}
 
-	void Primative::updateTransform()
+	void Primative::UpdateTransform()
 	{
 		shader->Activate();
 		std::string mT = "model";
@@ -251,7 +251,7 @@ namespace JuicyEngineNS
 
 	}
 
-	void Primative::bounce()
+	void Primative::Bounce()
 	{
 
 
@@ -261,7 +261,7 @@ namespace JuicyEngineNS
 
 	}
 
-	void Primative::moveTo(glm::vec3 v)
+	void Primative::MoveTo(glm::vec3 v)
 	{
 
 		glm::mat4 newModel = glm::mat4(1.0f);
@@ -272,7 +272,7 @@ namespace JuicyEngineNS
 
 	}
 
-	void Primative::setCameraMatrices(glm::mat4& m, glm::mat4& v, glm::mat4& p)
+	void Primative::SetCameraMatrices(glm::mat4& m, glm::mat4& v, glm::mat4& p)
 	{
 
 		model = m;

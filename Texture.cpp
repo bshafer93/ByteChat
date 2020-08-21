@@ -7,8 +7,8 @@ namespace JuicyEngineNS
 
 	Texture::Texture(const char* texPath, bool alpha)
 	{
-		glGenTextures(1, &ID);
-		glBindTexture(GL_TEXTURE_2D, ID);
+		glGenTextures(1, &id);
+		glBindTexture(GL_TEXTURE_2D, id);
 
 		if (!alpha)
 		{
@@ -36,11 +36,11 @@ namespace JuicyEngineNS
 		std::string num;
 		num.append(texPath);
 
-		data = stbi_load(texPath, &width, &height, &numChannels, 0);
-		std::cout << "Color Channels: " << numChannels << std::endl;
+		data = stbi_load(texPath, &width, &height, &number_of_channels, 0);
+		std::cout << "Color Channels: " << number_of_channels << std::endl;
 
 		if (data) {
-			if (numChannels == 4) {
+			if (number_of_channels == 4) {
 
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 				glGenerateMipmap(GL_TEXTURE_2D);
@@ -78,7 +78,7 @@ namespace JuicyEngineNS
 			glActiveTexture(GL_TEXTURE0);
 		}
 
-		glBindTexture(GL_TEXTURE_2D, ID);
+		glBindTexture(GL_TEXTURE_2D, id);
 
 	}
 }
