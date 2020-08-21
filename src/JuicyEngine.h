@@ -26,7 +26,7 @@ const int FONT_SIZE = 16.0f;
 #define FONTLOCATION "Fonts\\AtariClassicChunky.ttf"
 #endif
 #ifdef _WIN32
-#define FONTLOCATION "C:\\Windows\\Fonts\\arial.ttf"
+#define FONTLOCATION "Fonts\\tuffy.ttf"
 #endif
 
 #define FONTVERTSHADER "Shaders\\fontVertShader.vert"
