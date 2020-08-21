@@ -133,7 +133,7 @@ namespace JuicyEngineNS
 
 		// activate corresponding render state	
 		font_shader->Activate();
-		glUniform3f(glGetUniformLocation(font_shader->ID, "textColor"), color.x, color.y, color.z);
+		glUniform3f(glGetUniformLocation(font_shader->id, "textColor"), color.x, color.y, color.z);
 		glActiveTexture(GL_TEXTURE0);
 		glBindVertexArray(vao);
 
@@ -199,7 +199,7 @@ namespace JuicyEngineNS
 		if (text_cursor.active == true) {
 			// activate corresponding render state	
 			font_shader->Activate();
-			glUniform3f(glGetUniformLocation(font_shader->ID, "textColor"), color.x, color.y, color.z);
+			glUniform3f(glGetUniformLocation(font_shader->id, "textColor"), color.x, color.y, color.z);
 			glActiveTexture(GL_TEXTURE0);
 			glBindVertexArray(vao);
 

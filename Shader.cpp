@@ -43,15 +43,15 @@ namespace JuicyEngineNS
 
 
 
-		ID = glCreateProgram();
-		glAttachShader(ID, vert_id);
-		glAttachShader(ID, frag_id);
-		glLinkProgram(ID);
+		id = glCreateProgram();
+		glAttachShader(id, vert_id);
+		glAttachShader(id, frag_id);
+		glLinkProgram(id);
 
 		// check for linking errors
-		glGetProgramiv(ID, GL_LINK_STATUS, &success);
+		glGetProgramiv(id, GL_LINK_STATUS, &success);
 		if (!success) {
-			glGetProgramInfoLog(ID, 512, NULL, log);
+			glGetProgramInfoLog(id, 512, NULL, log);
 			std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << log << std::endl;
 		}
 
@@ -64,17 +64,17 @@ namespace JuicyEngineNS
 
 	Shader::~Shader()
 	{
-		glDeleteProgram(ID);
+		glDeleteProgram(id);
 	}
 
 	void Shader::Activate()
 	{
-		glUseProgram(ID);
+		glUseProgram(id);
 	}
 
 	void Shader::SetUniformMat4(std::string& uniformName, glm::mat4 tran)
 	{
-		int location = glGetUniformLocation(ID, uniformName.c_str());
+		int location = glGetUniformLocation(id, uniformName.c_str());
 
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(tran));
 	}
@@ -82,14 +82,14 @@ namespace JuicyEngineNS
 	void Shader::SetUniformMat4(const char* uniformName, glm::mat4 tran)
 	{
 
-		int location = glGetUniformLocation(ID, uniformName);
+		int location = glGetUniformLocation(id, uniformName);
 
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(tran));
 	}
 
 	void Shader::SetUniformBool(std::string& uniformName, bool val)
 	{
-		int location = glGetUniformLocation(ID, uniformName.c_str());
+		int location = glGetUniformLocation(id, uniformName.c_str());
 
 		glUniform1i(location, (int)val);
 
@@ -98,7 +98,7 @@ namespace JuicyEngineNS
 
 	void Shader::SetUniformInt(std::string& uniformName, int val)
 	{
-		int location = glGetUniformLocation(ID, uniformName.c_str());
+		int location = glGetUniformLocation(id, uniformName.c_str());
 
 		glUniform1i(location, (int)val);
 
@@ -107,7 +107,7 @@ namespace JuicyEngineNS
 
 	void Shader::SetUniformFloat(std::string& uniformName, float val)
 	{
-		int location = glGetUniformLocation(ID, uniformName.c_str());
+		int location = glGetUniformLocation(id, uniformName.c_str());
 
 		glUniform1i(location, (int)val);
 

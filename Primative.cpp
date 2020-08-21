@@ -240,13 +240,13 @@ namespace JuicyEngineNS
 	{
 		shader->Activate();
 		std::string mT = "model";
-		int modelLoc = glGetUniformLocation(shader->ID, "model");
+		int modelLoc = glGetUniformLocation(shader->id, "model");
 		glad_glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		std::string vT = "view";
-		int modelLoc1 = glGetUniformLocation(shader->ID, "view");
+		int modelLoc1 = glGetUniformLocation(shader->id, "view");
 		glad_glUniformMatrix4fv(modelLoc1, 1, GL_FALSE, glm::value_ptr(*view));
 		std::string pT = "projection";
-		int modelLoc2 = glGetUniformLocation(shader->ID, "projection");
+		int modelLoc2 = glGetUniformLocation(shader->id, "projection");
 		glad_glUniformMatrix4fv(modelLoc2, 1, GL_FALSE, glm::value_ptr(*projection));
 
 	}
