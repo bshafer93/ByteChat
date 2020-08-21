@@ -1,6 +1,6 @@
 #include "JuicyEngine.h"
 #include "Shader.h"
-#include "primative.h"
+
 
 namespace JuicyEngineNS
 {

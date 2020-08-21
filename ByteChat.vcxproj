@@ -213,23 +213,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BasicChatClient.cpp" />
-    <ClCompile Include="glad.c" />
-    <ClCompile Include="JuicyEngine.cpp" />
+    <ClCompile Include="src\BasicChatClient.cpp" />
+    <ClCompile Include="src\glad.c" />
+    <ClCompile Include="src\JuicyEngine.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Packet.cpp" />
-    <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="TextRenderer.cpp" />
-    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="src\Packet.cpp" />
+    <ClCompile Include="src\Shader.cpp" />
+    <ClCompile Include="src\TextRenderer.cpp" />
+    <ClCompile Include="src\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BasicChatClient.h" />
-    <ClInclude Include="JuicyEngine.h" />
-    <ClInclude Include="Packet.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="stb_image.h" />
-    <ClInclude Include="TextRenderer.h" />
-    <ClInclude Include="Texture.h" />
+    <ClInclude Include="src\BasicChatClient.h" />
+    <ClInclude Include="src\JuicyEngine.h" />
+    <ClInclude Include="src\Packet.h" />
+    <ClInclude Include="src\Shader.h" />
+    <ClInclude Include="src\stb_image.h" />
+    <ClInclude Include="src\TextRenderer.h" />
+    <ClInclude Include="src\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="AtariClassicChunky.ttf" />
