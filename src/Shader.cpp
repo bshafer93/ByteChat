@@ -1,5 +1,5 @@
 #include "Shader.h"
-namespace JuicyEngineNS
+namespace BByteEngineNS
 {
 
 	Shader::Shader(const char* vertP, const char* fragP)

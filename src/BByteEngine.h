@@ -32,11 +32,11 @@ const int FONT_SIZE = 16.0f;
 #define FONTVERTSHADER "Shaders\\fontVertShader.vert"
 #define FONTFRAGSHADER "Shaders\\fontFragShader.frag"
 
-namespace JuicyEngineNS
+namespace BByteEngineNS
 {
 
 	
-	class JuicyEngine
+	class BByteEngine
 	{
 
 	public:
@@ -46,13 +46,13 @@ namespace JuicyEngineNS
 		int max_rows = 80;
 		int max_columns = 30;
 
-		JuicyEngine();
-		~JuicyEngine();
+		BByteEngine();
+		~BByteEngine();
 
 		//--------------VARIABLES----------------
 		GLFWwindow* window;
 	
-		TextRenderer* text;
+		std::unique_ptr<TextRenderer> text;
 		glm::vec3 default_font_color;
 	
 		//-----Camera variables-----------------

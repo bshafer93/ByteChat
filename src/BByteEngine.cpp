@@ -1,8 +1,8 @@
-#include "JuicyEngine.h"
+#include "BByteEngine.h"
 #include "Shader.h"
 
 
-namespace JuicyEngineNS
+namespace BByteEngineNS
 {
 	// vertex attributes for a quad that fills the entire screen in Normalized Device Coordinates.
 	float quadVertices[] = { 
@@ -16,7 +16,7 @@ namespace JuicyEngineNS
 	 1.0f,  1.0f,  1.0f, 1.0f
 	};
 
-	JuicyEngine::JuicyEngine()
+	BByteEngine::BByteEngine()
 	{
 		get_input = false;
 		init_glfw_glad();
@@ -27,7 +27,7 @@ namespace JuicyEngineNS
 		view = glm::mat4(1.0f);
 
 		//Initialize font----------------------- 
-		text = new TextRenderer(FONTLOCATION, FONTVERTSHADER, FONTFRAGSHADER, FONT_SIZE, window_width, window_height);
+		text.reset (new TextRenderer(FONTLOCATION, FONTVERTSHADER, FONTFRAGSHADER, FONT_SIZE, window_width, window_height));
 		//--------------------------------------
 
 		max_rows = window_height / (text->font_max_height + LINE_SPACING); //10pix padding
@@ -48,13 +48,13 @@ namespace JuicyEngineNS
 
 	}
 
-	JuicyEngine::~JuicyEngine()
+	BByteEngine::~BByteEngine()
 	{
 
 		glfwTerminate();
 	}
 
-	int JuicyEngine::init_glfw_glad()
+	int BByteEngine::init_glfw_glad()
 	{
 		glfwInit();
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -95,17 +95,17 @@ namespace JuicyEngineNS
 
 	}
 
-	void JuicyEngine::callback_WindowResize(GLFWwindow* window, int width, int height)
+	void BByteEngine::callback_WindowResize(GLFWwindow* window, int width, int height)
 	{
 		glViewport(0, 0, width, height);
 
-		JuicyEngine* JS;
-		JS = reinterpret_cast<JuicyEngine*>(glfwGetWindowUserPointer(window));
+		BByteEngine* JS;
+		JS = reinterpret_cast<BByteEngine*>(glfwGetWindowUserPointer(window));
 		JS->window_height = height;
 		JS->window_width = width;
 		//remove old font... This wastes SO much resources but oh well
-		delete JS->text;
-		JS->text = new TextRenderer(FONTLOCATION, FONTVERTSHADER, FONTFRAGSHADER,FONT_SIZE, JS->window_width, JS->window_height);
+		
+		JS->text.reset (new TextRenderer(FONTLOCATION, FONTVERTSHADER, FONTFRAGSHADER,FONT_SIZE, JS->window_width, JS->window_height));
 		JS->SetUpFrameBuffer();
 		std::cout << "Window Width: " << JS->window_width << std::endl;
 		std::cout << "Window Height: " << JS->window_height << std::endl;
@@ -116,24 +116,24 @@ namespace JuicyEngineNS
 
 	}
 
-	void JuicyEngine::character_callback(GLFWwindow* window, unsigned int codepoint)
+	void BByteEngine::character_callback(GLFWwindow* window, unsigned int codepoint)
 	{
-		JuicyEngine* JS;
-		JS = reinterpret_cast<JuicyEngine*>(glfwGetWindowUserPointer(window));
+		BByteEngine* JS;
+		JS = reinterpret_cast<BByteEngine*>(glfwGetWindowUserPointer(window));
 		JS->input_text += (char)codepoint;
 
 	}
 
-	void JuicyEngine::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+	void BByteEngine::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
-		JuicyEngine* JS;
-		JS = reinterpret_cast<JuicyEngine*>(glfwGetWindowUserPointer(window));
+		BByteEngine* JS;
+		JS = reinterpret_cast<BByteEngine*>(glfwGetWindowUserPointer(window));
 		keyInputStruct ki = { key,scancode,action,mods };
 		JS->key_input_queue.push(ki);
 
 	}
 
-	void JuicyEngine::ProcessInput(GLFWwindow* window)
+	void BByteEngine::ProcessInput(GLFWwindow* window)
 	{
 		if (key_input_queue.empty()) {
 			return;
@@ -177,7 +177,7 @@ namespace JuicyEngineNS
 		key_input_queue.pop();
 	}
 
-	int JuicyEngine::RenderLoop()
+	int BByteEngine::RenderLoop()
 	{
 
 	
@@ -264,7 +264,7 @@ namespace JuicyEngineNS
 
 	}
 
-	void JuicyEngine::Run()
+	void BByteEngine::Run()
 	{
 		//Run is still here just incase I wanna add anything else before the render loop starts. 
 
@@ -297,7 +297,7 @@ namespace JuicyEngineNS
 		return full_file_string;
 	}
 
-	void JuicyEngine::ClearFrameBuffer()
+	void BByteEngine::ClearFrameBuffer()
 	{
 
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -307,7 +307,7 @@ namespace JuicyEngineNS
 
 
 
-	void JuicyEngine::SetUpFrameBuffer()
+	void BByteEngine::SetUpFrameBuffer()
 	{
 		if (screen_shader != nullptr) {
 			//Remove old buffers when window resizes

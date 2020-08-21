@@ -1,5 +1,5 @@
 #include "TextRenderer.h"
-namespace JuicyEngineNS
+namespace BByteEngineNS
 {
 
 	TextRenderer::TextRenderer(const char* fPath, const char* vertShader, const char* fragShader, int fSize, int winWidth, int winHeight)

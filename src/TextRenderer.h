@@ -9,7 +9,7 @@
 #include FT_FREETYPE_H
 
 
-namespace JuicyEngineNS
+namespace BByteEngineNS
 {
 
     class TextRenderer

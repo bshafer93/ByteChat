@@ -36,7 +36,7 @@
     <ClCompile Include="src\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\JuicyEngine.cpp">
+    <ClCompile Include="src\BByteEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,7 +59,7 @@
     <ClInclude Include="src\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\JuicyEngine.h">
+    <ClInclude Include="src\BByteEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

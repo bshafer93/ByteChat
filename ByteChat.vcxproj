@@ -215,7 +215,7 @@
   <ItemGroup>
     <ClCompile Include="src\BasicChatClient.cpp" />
     <ClCompile Include="src\glad.c" />
-    <ClCompile Include="src\JuicyEngine.cpp" />
+    <ClCompile Include="src\BByteEngine.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Packet.cpp" />
     <ClCompile Include="src\Shader.cpp" />
@@ -224,7 +224,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BasicChatClient.h" />
-    <ClInclude Include="src\JuicyEngine.h" />
+    <ClInclude Include="src\BByteEngine.h" />
     <ClInclude Include="src\Packet.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\stb_image.h" />

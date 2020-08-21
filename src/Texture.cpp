@@ -2,7 +2,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-namespace JuicyEngineNS
+namespace BByteEngineNS
 {
 
 	Texture::Texture(const char* texPath, bool alpha)

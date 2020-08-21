@@ -1,11 +1,11 @@
 #include <iostream>
-#include "JuicyEngine.h"
+#include "BByteEngine.h"
 
 
 int main(int argc, char** argv) {
 	
 
-	JuicyEngineNS::JuicyEngine je;
+	BByteEngineNS::BByteEngine je;
 	je.Run();
 	
 	return 0;
