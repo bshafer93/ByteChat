@@ -17,15 +17,15 @@ namespace JuicyEngineNS
 		Shader(const char* vertPath, const char* fragPath);
 		~Shader();
 		unsigned int ID;
-		void activate();
+		void Activate();
 
-		void setUniformBool(std::string& uniformName, bool val);
-		void setUniformInt(std::string& uniformName, int val);
-		void setUniformFloat(std::string& uniformName, float val);
-		void setUniformMat4(std::string& uniformName, glm::mat4 tran);
-		void setUniformMat4(const char* uniformName, glm::mat4 tran);
+		void SetUniformBool(std::string& uniformName, bool val);
+		void SetUniformInt(std::string& uniformName, int val);
+		void SetUniformFloat(std::string& uniformName, float val);
+		void SetUniformMat4(std::string& uniformName, glm::mat4 tran);
+		void SetUniformMat4(const char* uniformName, glm::mat4 tran);
 
-		std::string loadFile(const char* path);
+		std::string LoadFile(const char* path);
 	};
 
 }

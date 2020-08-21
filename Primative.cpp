@@ -138,9 +138,9 @@ namespace JuicyEngineNS
 			glEnableVertexAttribArray(1);
 
 			tex01 = new Texture("I:\\Programming\\SpaceAdventure\\resources\\images\\coaltexture.tga", true);
-			shader->activate();
+			shader->Activate();
 			std::string te = "texture1";
-			shader->setUniformInt(te, 0);
+			shader->SetUniformInt(te, 0);
 
 			break;
 
@@ -168,9 +168,9 @@ namespace JuicyEngineNS
 			glEnableVertexAttribArray(1);
 
 			tex01 = new Texture("I:\\Programming\\SpaceAdventure\\resources\\images\\coaltexture.tga", true);
-			shader->activate();
+			shader->Activate();
 			std::string te = "texture1";
-			shader->setUniformInt(te, 0);
+			shader->SetUniformInt(te, 0);
 
 		}
 		}
@@ -198,7 +198,7 @@ namespace JuicyEngineNS
 		case JuicyEngine::primativeType::TRIANGLE:
 		{
 
-			shader->activate();
+			shader->Activate();
 			updateTransform();
 			glBindVertexArray(VAO_ID);
 			glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -208,7 +208,7 @@ namespace JuicyEngineNS
 		{
 
 			tex01->activate(0);
-			shader->activate();
+			shader->Activate();
 			updateTransform();
 
 			glBindVertexArray(VAO_ID);
@@ -221,7 +221,7 @@ namespace JuicyEngineNS
 		{
 
 			tex01->activate(0);
-			shader->activate();
+			shader->Activate();
 			updateTransform();
 			glBindVertexArray(VAO_ID);
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -238,7 +238,7 @@ namespace JuicyEngineNS
 
 	void Primative::updateTransform()
 	{
-		shader->activate();
+		shader->Activate();
 		std::string mT = "model";
 		int modelLoc = glGetUniformLocation(shader->ID, "model");
 		glad_glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));

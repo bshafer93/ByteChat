@@ -12,7 +12,6 @@
 namespace JuicyEngineNS
 {
 
-
     class TextRenderer
     {
     public:
@@ -27,36 +26,30 @@ namespace JuicyEngineNS
             unsigned int Advance;    // Offset to advance to next glyph
             int charWidth;
         };
-
         struct InputCursor {
             float xPos;
             float yPos;
             bool active;
-
-
-
         };
-        InputCursor textCursor;
-        unsigned int FONT_ID;
-        unsigned int VAO;
-        unsigned int VBO;
-        int fontSize;
-        Shader* fontShader;
-
-        //--------------framebuffer-------------
-
-        //--------------------------------------
-
-        FT_Library ft_library;
-        FT_Face fontFace;
-        CharacterFont CharacterArray[256];
-
-        int FONT_MAX_HEIGHT;
-        int FONT_MAX_WIDTH;
 
         void DrawString(std::string text, float x, float y, float scale, glm::vec3 color);
         void DrawCharacter(char c, float x, float y, float scale, glm::vec3 color);
         void DrawCursor(float scale, glm::vec3 color);
+
+
+        InputCursor text_cursor;
+        unsigned int font_id;
+        unsigned int vao;
+        unsigned int vbo;
+        int font_size;
+        Shader* font_shader;
+
+        FT_Library ft_library;
+        FT_Face font_face;
+        CharacterFont character_array[256];
+
+        int font_max_height;
+        int font_max_width;
 
     };
 

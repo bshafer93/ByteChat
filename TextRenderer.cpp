@@ -4,13 +4,13 @@ namespace JuicyEngineNS
 
 	TextRenderer::TextRenderer(const char* fPath, const char* vertShader, const char* fragShader, int fSize, int winWidth, int winHeight)
 	{
-		textCursor.active = false;
-		fontSize = fSize;
+		text_cursor.active = false;
+		font_size = fSize;
 		std::string vertS, fragS, fontPath;
 		vertS.append(vertShader);
 		fragS.append(fragShader);
 		fontPath.append(fPath);
-		fontShader = new Shader(vertS.c_str(), fragS.c_str());
+		font_shader = new Shader(vertS.c_str(), fragS.c_str());
 
 
 
@@ -20,18 +20,18 @@ namespace JuicyEngineNS
 		}
 
 		if (fPath == NULL) {
-			if (FT_New_Face(ft_library, "I:\\Programming\\SpaceAdventure\\resources\\font\\AtariClassicChunky.ttf", 0, &fontFace)) {
+			if (FT_New_Face(ft_library, "I:\\Programming\\SpaceAdventure\\resources\\font\\AtariClassicChunky.ttf", 0, &font_face)) {
 				std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
 			}
 		}
-		else if (FT_New_Face(ft_library, fontPath.c_str(), 0, &fontFace)) {
+		else if (FT_New_Face(ft_library, fontPath.c_str(), 0, &font_face)) {
 			std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
 		}
 
-		std::cout << "Number Of Glyphs In Font: " << fontFace->num_glyphs << std::endl;
+		std::cout << "Number Of Glyphs In Font: " << font_face->num_glyphs << std::endl;
 
 		//setFontsize
-		FT_Set_Pixel_Sizes(fontFace, 0, fontSize);
+		FT_Set_Pixel_Sizes(font_face, 0, font_size);
 
 
 
@@ -41,19 +41,19 @@ namespace JuicyEngineNS
 		{
 			FT_UInt glyph_index; //Unicode index 
 
-			glyph_index = FT_Get_Char_Index(fontFace, c); // Get unicode index of Char;
+			glyph_index = FT_Get_Char_Index(font_face, c); // Get unicode index of Char;
 
 			/* load glyph image into the slot (erase previous one) */
-			if (FT_Load_Glyph(fontFace, glyph_index, FT_LOAD_RENDER)) {
+			if (FT_Load_Glyph(font_face, glyph_index, FT_LOAD_RENDER)) {
 				std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
 				continue;
 			}
 
 			if (c == 'H') {
-				FONT_MAX_HEIGHT = fontFace->glyph->bitmap.rows;
+				font_max_height = font_face->glyph->bitmap.rows;
 			}
 			if (c == 'W') {
-				FONT_MAX_WIDTH = fontFace->glyph->bitmap.width;
+				font_max_width = font_face->glyph->bitmap.width;
 			
 			}
 
@@ -67,12 +67,12 @@ namespace JuicyEngineNS
 				GL_TEXTURE_2D,
 				0,
 				GL_RED,
-				fontFace->glyph->bitmap.width,
-				fontFace->glyph->bitmap.rows,
+				font_face->glyph->bitmap.width,
+				font_face->glyph->bitmap.rows,
 				0,
 				GL_RED,
 				GL_UNSIGNED_BYTE,
-				fontFace->glyph->bitmap.buffer
+				font_face->glyph->bitmap.buffer
 			);
 			// set texture options
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -82,24 +82,24 @@ namespace JuicyEngineNS
 			// now store character for later use
 			CharacterFont character = {
 				textureFont_ID,
-				glm::ivec2(fontFace->glyph->bitmap.width, fontFace->glyph->bitmap.rows),
-				glm::ivec2(fontFace->glyph->bitmap_left, fontFace->glyph->bitmap_top),
-				fontFace->glyph->advance.x,
-				fontFace->glyph->bitmap.width
+				glm::ivec2(font_face->glyph->bitmap.width, font_face->glyph->bitmap.rows),
+				glm::ivec2(font_face->glyph->bitmap_left, font_face->glyph->bitmap_top),
+				font_face->glyph->advance.x,
+				font_face->glyph->bitmap.width
 			};
 
-			CharacterArray[c] = character;
+			character_array[c] = character;
 		}
 
 
 
-		FT_Done_Face(fontFace);
+		FT_Done_Face(font_face);
 		FT_Done_FreeType(ft_library);
 
-		glGenVertexArrays(1, &VAO);
-		glGenBuffers(1, &VBO);
-		glBindVertexArray(VAO);
-		glBindBuffer(GL_ARRAY_BUFFER, VBO);
+		glGenVertexArrays(1, &vao);
+		glGenBuffers(1, &vbo);
+		glBindVertexArray(vao);
+		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
@@ -107,8 +107,8 @@ namespace JuicyEngineNS
 		glBindVertexArray(0);
 
 		glm::mat4 proj = glm::ortho(0.0f, static_cast<float>(winWidth), static_cast<float>(winHeight), 0.0f);
-		fontShader->activate();
-		fontShader->setUniformMat4("projection", proj);
+		font_shader->Activate();
+		font_shader->SetUniformMat4("projection", proj);
 
 
 
@@ -117,35 +117,35 @@ namespace JuicyEngineNS
 	TextRenderer::~TextRenderer()
 	{
 		for (int i = 0; i < 256; i++) {
-			glDeleteTextures(1, &CharacterArray[i].TexID);
+			glDeleteTextures(1, &character_array[i].TexID);
 		}
-		glDeleteVertexArrays(1, &VAO);
-		glDeleteBuffers(1, &VBO);
-		delete fontShader;
+		glDeleteVertexArrays(1, &vao);
+		glDeleteBuffers(1, &vbo);
+		delete font_shader;
 		
 
 	}
 
 	void TextRenderer::DrawString(std::string text, float x, float y, float scale, glm::vec3 color)
 	{
-		textCursor.xPos = x;
-		textCursor.yPos = y;
+		text_cursor.xPos = x;
+		text_cursor.yPos = y;
 
 		// activate corresponding render state	
-		fontShader->activate();
-		glUniform3f(glGetUniformLocation(fontShader->ID, "textColor"), color.x, color.y, color.z);
+		font_shader->Activate();
+		glUniform3f(glGetUniformLocation(font_shader->ID, "textColor"), color.x, color.y, color.z);
 		glActiveTexture(GL_TEXTURE0);
-		glBindVertexArray(VAO);
+		glBindVertexArray(vao);
 
 		// iterate through all characters
 		std::string::const_iterator c;
 		for (c = text.begin(); c != text.end(); c++)
 		{
 
-			CharacterFont ch = CharacterArray[*c];
+			CharacterFont ch = character_array[*c];
 
-			float xpos = textCursor.xPos + ch.Bearing.x * scale;
-			float ypos = textCursor.yPos + (CharacterArray['H'].Bearing.y - ch.Bearing.y) * scale;
+			float xpos = text_cursor.xPos + ch.Bearing.x * scale;
+			float ypos = text_cursor.yPos + (character_array['H'].Bearing.y - ch.Bearing.y) * scale;
 
 			float w = ch.Size.x * scale;
 			float h = ch.Size.y * scale;
@@ -162,13 +162,13 @@ namespace JuicyEngineNS
 			// render glyph texture over quad
 			glBindTexture(GL_TEXTURE_2D, ch.TexID);
 			// update content of VBO memory
-			glBindBuffer(GL_ARRAY_BUFFER, VBO);
+			glBindBuffer(GL_ARRAY_BUFFER, vbo);
 			glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(font_vertices), font_vertices);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 			// render quad
 			glDrawArrays(GL_TRIANGLES, 0, 6);
 			// now advance cursors for next glyph (note that advance is number of 1/64 pixels)
-			textCursor.xPos += (ch.Advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64)
+			text_cursor.xPos += (ch.Advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64)
 
 		}
 		glBindVertexArray(0);
@@ -193,21 +193,21 @@ namespace JuicyEngineNS
 
 		if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - oldTime) > std::chrono::milliseconds{ 560 }) {
 			oldTime = std::chrono::high_resolution_clock::now();
-			textCursor.active = !textCursor.active;
+			text_cursor.active = !text_cursor.active;
 		}
 
-		if (textCursor.active == true) {
+		if (text_cursor.active == true) {
 			// activate corresponding render state	
-			fontShader->activate();
-			glUniform3f(glGetUniformLocation(fontShader->ID, "textColor"), color.x, color.y, color.z);
+			font_shader->Activate();
+			glUniform3f(glGetUniformLocation(font_shader->ID, "textColor"), color.x, color.y, color.z);
 			glActiveTexture(GL_TEXTURE0);
-			glBindVertexArray(VAO);
+			glBindVertexArray(vao);
 
 
-			CharacterFont ch = CharacterArray[124];
+			CharacterFont ch = character_array[124];
 
-			float xpos = textCursor.xPos + ch.Bearing.x * scale;
-			float ypos = textCursor.yPos + (CharacterArray['H'].Bearing.y - ch.Bearing.y) * scale;
+			float xpos = text_cursor.xPos + ch.Bearing.x * scale;
+			float ypos = text_cursor.yPos + (character_array['H'].Bearing.y - ch.Bearing.y) * scale;
 
 			float w = ch.Size.x * scale;
 			float h = ch.Size.y * scale;
@@ -224,7 +224,7 @@ namespace JuicyEngineNS
 			// render glyph texture over quad
 			glBindTexture(GL_TEXTURE_2D, ch.TexID);
 			// update content of VBO memory
-			glBindBuffer(GL_ARRAY_BUFFER, VBO);
+			glBindBuffer(GL_ARRAY_BUFFER, vbo);
 			glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(font_vertices), font_vertices);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 			// render quad

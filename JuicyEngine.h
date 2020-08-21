@@ -10,6 +10,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <queue>
 
+
 #include <fstream>
 #include <math.h>
 #include "Shader.h"
@@ -30,6 +31,7 @@ const int FONT_SIZE = 16.0f;
 
 #define FONTVERTSHADER "Shaders\\fontVertShader.vert"
 #define FONTFRAGSHADER "Shaders\\fontFragShader.frag"
+
 namespace JuicyEngineNS
 {
 

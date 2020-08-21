@@ -7,8 +7,8 @@ namespace JuicyEngineNS
 
 		std::string vertContents, fragContents;
 
-		vertContents = loadFile(vertP);
-		fragContents = loadFile(fragP);
+		vertContents = LoadFile(vertP);
+		fragContents = LoadFile(fragP);
 		const char* vert = vertContents.c_str();
 		const char* frag = fragContents.c_str();
 		unsigned int vert_id = glCreateShader(GL_VERTEX_SHADER);
@@ -67,19 +67,19 @@ namespace JuicyEngineNS
 		glDeleteProgram(ID);
 	}
 
-	void Shader::activate()
+	void Shader::Activate()
 	{
 		glUseProgram(ID);
 	}
 
-	void Shader::setUniformMat4(std::string& uniformName, glm::mat4 tran)
+	void Shader::SetUniformMat4(std::string& uniformName, glm::mat4 tran)
 	{
 		int location = glGetUniformLocation(ID, uniformName.c_str());
 
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(tran));
 	}
 
-	void Shader::setUniformMat4(const char* uniformName, glm::mat4 tran)
+	void Shader::SetUniformMat4(const char* uniformName, glm::mat4 tran)
 	{
 
 		int location = glGetUniformLocation(ID, uniformName);
@@ -87,7 +87,7 @@ namespace JuicyEngineNS
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(tran));
 	}
 
-	void Shader::setUniformBool(std::string& uniformName, bool val)
+	void Shader::SetUniformBool(std::string& uniformName, bool val)
 	{
 		int location = glGetUniformLocation(ID, uniformName.c_str());
 
@@ -96,7 +96,7 @@ namespace JuicyEngineNS
 
 	}
 
-	void Shader::setUniformInt(std::string& uniformName, int val)
+	void Shader::SetUniformInt(std::string& uniformName, int val)
 	{
 		int location = glGetUniformLocation(ID, uniformName.c_str());
 
@@ -105,7 +105,7 @@ namespace JuicyEngineNS
 
 	}
 
-	void Shader::setUniformFloat(std::string& uniformName, float val)
+	void Shader::SetUniformFloat(std::string& uniformName, float val)
 	{
 		int location = glGetUniformLocation(ID, uniformName.c_str());
 
@@ -114,7 +114,7 @@ namespace JuicyEngineNS
 
 	}
 
-	std::string Shader::loadFile(const char* path)
+	std::string Shader::LoadFile(const char* path)
 	{
 
 		std::fstream loadedFile;

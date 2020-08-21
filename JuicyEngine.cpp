@@ -30,8 +30,8 @@ namespace JuicyEngineNS
 		text = new TextRenderer(FONTLOCATION, FONTVERTSHADER, FONTFRAGSHADER, FONT_SIZE, window_width, window_height);
 		//--------------------------------------
 
-		MAX_ROWS = window_height / (text->FONT_MAX_HEIGHT + LINE_SPACING); //10pix padding
-		MAX_COLS = window_width / (text->FONT_MAX_WIDTH / 2);
+		MAX_ROWS = window_height / (text->font_max_height + LINE_SPACING); //10pix padding
+		MAX_COLS = window_width / (text->font_max_width / 2);
 
 		std::cout << "MAX_ROWS:	" << MAX_ROWS << std::endl;
 		std::cout << "MAX_COLS:	" << MAX_COLS << std::endl;
@@ -109,8 +109,8 @@ namespace JuicyEngineNS
 		JS->SetUpFrameBuffer();
 		std::cout << "Window Width: " << JS->window_width << std::endl;
 		std::cout << "Window Height: " << JS->window_height << std::endl;
-		JS->MAX_ROWS = JS->window_height / (JS->text->FONT_MAX_HEIGHT+5); //10pix padding
-		JS->MAX_COLS = JS->window_width / (JS->text->FONT_MAX_WIDTH/2);
+		JS->MAX_ROWS = JS->window_height / (JS->text->font_max_height+5); //10pix padding
+		JS->MAX_COLS = JS->window_width / (JS->text->font_max_width/2);
 		std::cout << "MAX_ROWS:	" << JS->MAX_ROWS << std::endl;
 		std::cout << "MAX_COLS:	" << JS->MAX_COLS << std::endl;
 
@@ -209,20 +209,20 @@ namespace JuicyEngineNS
 						if (client.message_log[i].size() > MAX_COLS) {
 							text->DrawString(client.message_log[i].substr(0,MAX_COLS).c_str(),
 								10.0f,
-								(i * (text->FONT_MAX_HEIGHT + LINE_SPACING)) + LINE_SPACING,
+								(i * (text->font_max_height + LINE_SPACING)) + LINE_SPACING,
 								1.0f,
 								glm::vec3(0.5f, 0.8f, 0.2f));
 							i++;
 							text->DrawString(client.message_log[i - 1].substr(MAX_COLS, client.message_log[i-1].size()-1).c_str(),
 								10.0f,
-								(i * (text->FONT_MAX_HEIGHT + LINE_SPACING)) + LINE_SPACING,
+								(i * (text->font_max_height + LINE_SPACING)) + LINE_SPACING,
 								1.0f,
 								glm::vec3(0.5f, 0.8f, 0.2f));
 						}
 						else {
 							text->DrawString(client.message_log[i].c_str(),
 								10.0f,
-								(i * (text->FONT_MAX_HEIGHT + LINE_SPACING)) + LINE_SPACING,
+								(i * (text->font_max_height + LINE_SPACING)) + LINE_SPACING,
 								1.0f,
 								glm::vec3(0.5f, 0.8f, 0.2f));
 						}
@@ -239,7 +239,7 @@ namespace JuicyEngineNS
 
 			if (getInput == true) {
 
-				text->DrawString(inputText.c_str(), 10.0f , window_height - text->FONT_MAX_HEIGHT-5.0f,1.0f, default_font_color);
+				text->DrawString(inputText.c_str(), 10.0f , window_height - text->font_max_height-5.0f,1.0f, default_font_color);
 				text->DrawCursor(1.0f, default_font_color);
 			}
 
@@ -247,7 +247,7 @@ namespace JuicyEngineNS
 			glDisable(GL_DEPTH_TEST);
 			clearFrameBuffer();
 
-			screenShader->activate();
+			screenShader->Activate();
 			glBindVertexArray(VAO_SCREEN);
 			glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
 			glDrawArrays(GL_TRIANGLES, 0, 6);
