@@ -16,7 +16,7 @@ namespace JuicyEngineNS
 	public:
 		Shader(const char* vertPath, const char* fragPath);
 		~Shader();
-		unsigned int ID;
+		unsigned int id;
 		void Activate();
 
 		void SetUniformBool(std::string& uniformName, bool val);
